@@ -1,0 +1,81 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'java'
+}
+
+ext {
+    h2DbVersion="1.4.199"
+}
+
+repositories {
+    mavenCentral()
+}
+
+subprojects{
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+
+    group = 'com.springbootexample'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '15'
+
+    repositories {
+        mavenCentral()
+    }
+
+    /*
+    SpringBoot 관련 의존성 버전은
+    위에서 정의한 io.spring.dependency-management 플러그인이 해주지만
+    그 외 의존성 버전관리는 아래와 같이 별도로 정의해야 한다.
+    이를 통해 실제 dependencies 시 버전을 명시하지 않으면 여기에서 정의한 버전으로 통일된다.
+     */
+//    dependencyManagement {
+//        dependencies{
+//            dependency "com.h2database:h2:$h2DbVersion"
+//        }
+//    }
+
+    dependencies {
+        implementation 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+//
+//    /*************** querydsl ***************/
+//    def querydslDir = "$buildDir/generated/querydsl"
+//
+//    querydsl {
+//        jpa = true
+//        querydslSourcesDir = querydslDir
+//    }
+//
+//    sourceSets {
+//        main.java.srcDir querydslDir
+//    }
+//
+//    configurations {
+//        querydsl.extendsFrom compileClasspath
+//    }
+//
+//    compileQuerydsl {
+//        options.annotationProcessorPath = configurations.querydsl
+//    }
+}
