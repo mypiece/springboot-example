@@ -24,7 +24,7 @@ public class FilterRegistrationBeanTest extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		log.info("FilterRegistrationBeanTest!!!!!!!!");
-		log.info(exampleService.toString());
+		log.info(exampleService.serviceTest());
 
 		filterChain.doFilter(request, response);
 	}

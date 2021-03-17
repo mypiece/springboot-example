@@ -24,7 +24,7 @@ public class WebFilterTest extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		log.info("WebFilterTest!!!!!!!!");
-		log.info(exampleService.toString());
+		log.info(exampleService.serviceTest());
 
 		filterChain.doFilter(request, response);
 

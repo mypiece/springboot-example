@@ -11,11 +11,9 @@ public class WebConfig {
 
 	@Bean
 	public FilterRegistrationBean testFilter(FilterRegistrationBeanTest filterRegistrationBeanTest) {
+
 		FilterRegistrationBean filterReg = new FilterRegistrationBean();
 		filterReg.setFilter(filterRegistrationBeanTest);
-
-		// List<String> urlPatternList = Arrays.asList("/test/*", "/api/*");
-		// filterRegistrationBean.setUrlPatterns(urlPatternList);
 
 		filterReg.addUrlPatterns("/example/filterRegistrationBean");
 		return filterReg;
