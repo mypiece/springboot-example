@@ -1,7 +1,7 @@
 package com.springbootexample.filterexample.filter;
 
 
-import com.springbootexample.filterexample.example.ExampleService;
+import com.springbootexample.filterexample.example.FilterService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,14 +17,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class FilterRegistrationBeanTest extends OncePerRequestFilter {
 
-	private final ExampleService exampleService;
+	private final FilterService filterService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 
 		log.info("FilterRegistrationBeanTest!!!!!!!!");
-		log.info(exampleService.serviceTest());
+		log.info(filterService.serviceTest());
 
 		filterChain.doFilter(request, response);
 	}

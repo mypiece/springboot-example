@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("example")
-public class ExampleController {
+public class FilterController {
 
 	@GetMapping("/hello")
 	public String hello(){
-		return "Hello Exaample!!!";
+		return "Hello Example!!!";
 	}
 
 	@GetMapping("/webfilter")

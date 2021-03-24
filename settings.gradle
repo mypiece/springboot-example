@@ -1,2 +1,3 @@
 rootProject.name = 'springboot-example'
 include 'filter-example'
+include 'intercepter-example'
