@@ -1,0 +1,1 @@
+insert into USER_INFO (USER_ID, PASSWORD, EMAIL, USER_ROLE) values('test','$2a$10$wmQF3OaZ5LLDtJnbJd26VepP8bx/G9dLPiTjQDKgBctpcYibrqyQq', 'test@test.com', 'USER');

@@ -1,4 +1,4 @@
-package com.springbootexample.filter.example;
+package com.springbootexample.filter.controller;
 
 import org.springframework.stereotype.Service;
 
