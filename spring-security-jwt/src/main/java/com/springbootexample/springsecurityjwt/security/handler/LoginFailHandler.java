@@ -1,10 +1,6 @@
 package com.springbootexample.springsecurityjwt.security.handler;
 
-import com.springbootexample.springsecurityjwt.security.model.dto.UserDTO;
-import com.springbootexample.springsecurityjwt.security.utils.JWTUtil;
-import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
