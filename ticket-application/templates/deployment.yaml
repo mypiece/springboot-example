@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationName }}
+  namespace: application
+  labels:
+    app: {{ .Values.applicationName }}
+  annotations:
+    buildTime: {{ now | quote }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationName }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationName }}
+    spec:
+      initContainers:
+        - name: apm-initializer
+          image: idock.daumkakao.io/kakaoapm/apm-pod-init:1.5
+          imagePullPolicy: Always
+          env:
+            - name: APM_VOLUME_DIR
+              value: /share-vol/apm
+          volumeMounts:
+            - name: share-vol
+              mountPath: /share-vol
+      containers:
+        - name: {{ .Values.applicationName }}
+          image: "idock.daumkakao.io/melon-ticket/{{ .Values.applicationName }}:{{ .Values.springProfile }}"
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.applicationName }}-cm
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.deployment.containers.resourceLimits.cpu | default "1000m" | quote }}
+              memory: {{ .Values.deployment.containers.resourceLimits.memory | default "1024Mi" | quote }}
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 10
+          volumeMounts:
+            - name: share-vol
+              mountPath: /share-vol
+      nodeSelector:
+        dkosv3.9rum.cc/node-group: {{ .Values.applicationName }}
+      volumes:
+        - name: share-vol
+          emptyDir: {}

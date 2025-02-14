@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.applicationName }}-cm
+  namespace: application
+  labels:
+    app: {{ .Values.applicationName }}
+data:
+  SPRING_PROFILES_ACTIVE: {{ .Values.springProfile | quote }}
+  JAVA_TOOL_OPTIONS: |
+    -javaagent:/share-vol/apm/apm.agent.jar
+    -Dapm_application_key={{ .Values.apmApplicationKey }}
+    -Dapm_collector_address=apm-kakao-collector.onkakao.net
+    -Xverify:none

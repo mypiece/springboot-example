@@ -1,0 +1,23 @@
+applicationName: mtapi
+springProfile: sandbox
+apmApplicationKey: 999d4656b49140e489cf05e577bb82e9
+
+configmap:
+  extraJavaToolOptions:
+    - -Dapm_webflux_tracing_enabled=true
+
+deployment:
+  containers:
+    resourceLimits:
+      cpu: "1000m"
+      memory: "1048Mi"
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
+  tls:
+    - hosts:
+        - sandbox-mtapi.melon.com
+      secretName: melon.com
+
